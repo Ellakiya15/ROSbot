@@ -1,0 +1,3398 @@
+<sdf version='1.10'>
+  <world name='default'>
+    <plugin name='gz::sim::systems::Physics' filename='gz-sim-physics-system'/>
+    <plugin name='gz::sim::systems::UserCommands' filename='gz-sim-user-commands-system'/>
+    <plugin name='gz::sim::systems::SceneBroadcaster' filename='gz-sim-scene-broadcaster-system'/>
+    <plugin name='gz::sim::systems::Sensors' filename='gz-sim-sensors-system'>
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin name='gz::sim::systems::Imu' filename='gz-sim-imu-system'/>
+    <scene>
+      <shadows>false</shadows>
+      <ambient>0.400000006 0.400000006 0.400000006 1</ambient>
+      <background>0.699999988 0.699999988 0.699999988 1</background>
+    </scene>
+    <gui fullscreen='false'>
+      <camera name='user_camera'>
+        <pose>0.31965399999999999 -0.23500199999999999 9.2944099999999992 1.522609579747792e-17 1.5138000000000049 0.0095990000000000172</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <physics type='ode'>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>150</iters>
+          <precon_iters>0</precon_iters>
+          <sor>1.3999999999999999</sor>
+          <use_dynamic_moi_rescaling>true</use_dynamic_moi_rescaling>
+        </solver>
+        <constraints>
+          <cfm>1.0000000000000001e-05</cfm>
+          <erp>0.20000000000000001</erp>
+          <contact_max_correcting_vel>2000</contact_max_correcting_vel>
+          <contact_surface_layer>0.01</contact_surface_layer>
+        </constraints>
+      </ode>
+    </physics>
+    <gravity>0 0 -9.8000000000000007</gravity>
+    <magnetic_field>5.5644999999999998e-06 2.2875799999999999e-05 -4.2388400000000002e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.300000012 0.300000012 0.300000012 1</ambient>
+            <diffuse>0.699999988 0.699999988 0.699999988 1</diffuse>
+            <specular>0.00999999978 0.00999999978 0.00999999978 1</specular>
+          </material>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='diffbot'>
+      <link name='base_link'>
+        <inertial>
+          <pose>0.11749999999999999 0 0.027500000000000011 0 0 0</pose>
+          <mass>0.40000000000000002</mass>
+          <inertia>
+            <ixx>0.0147075</ixx>
+            <ixy>0</ixy>
+            <ixz>0.0030225000000000009</ixz>
+            <iyy>0.020475</iyy>
+            <iyz>0</iyz>
+            <izz>0.017767499999999999</izz>
+          </inertia>
+        </inertial>
+        <collision name='base_link_collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.5 0.29999999999999999 0.14999999999999999</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+          </surface>
+        </collision>
+        <collision name='base_link_fixed_joint_lump__camera_collision_1'>
+          <pose>0.27000000000000002 0 0.01 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.050000000000000003 0.050000000000000003 0.050000000000000003</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+          </surface>
+        </collision>
+        <collision name='base_link_fixed_joint_lump__caster_wheel_collision_2'>
+          <pose>0.20000000000000001 0 -0.10000000000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.050000000000000003</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.10000000000000001</mu>
+                <mu2>0.10000000000000001</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+        </collision>
+        <collision name='base_link_fixed_joint_lump__lidar_collision_3'>
+          <pose>0 0 0.10000000000000001 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.050000000000000003</length>
+              <radius>0.10000000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+          </surface>
+        </collision>
+        <visual name='base_link_visual'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.5 0.29999999999999999 0.14999999999999999</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Blue</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+            <diffuse>0 0 1 1</diffuse>
+            <ambient>0 0 1 1</ambient>
+          </material>
+        </visual>
+        <visual name='base_link_fixed_joint_lump__camera_visual_1'>
+          <pose>0.27000000000000002 0 0.01 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.050000000000000003 0.050000000000000003 0.050000000000000003</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Red</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+            <diffuse>1 0 0 1</diffuse>
+            <ambient>1 0 0 1</ambient>
+          </material>
+        </visual>
+        <visual name='base_link_fixed_joint_lump__caster_wheel_visual_2'>
+          <pose>0.20000000000000001 0 -0.10000000000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.050000000000000003</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Black</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+            <diffuse>0 0 0 1</diffuse>
+            <ambient>0 0 0 1</ambient>
+          </material>
+        </visual>
+        <visual name='base_link_fixed_joint_lump__lidar_visual_3'>
+          <pose>0 0 0.10000000000000001 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.050000000000000003</length>
+              <radius>0.10000000000000001</radius>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Green</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+            <diffuse>0 0 0 1</diffuse>
+            <ambient>0 0 0 1</ambient>
+          </material>
+        </visual>
+        <sensor name='camera' type='camera'>
+          <pose>0.27000000000000002 0 0.01 0 0 0</pose>
+          <topic>camera/image_raw</topic>
+          <update_rate>30</update_rate>
+          <enable_metrics>false</enable_metrics>
+          <camera name='head'>
+            <pose>0 0 0 0 0 0</pose>
+            <horizontal_fov>1.3962634</horizontal_fov>
+            <image>
+              <width>800</width>
+              <height>600</height>
+              <format>RGB_INT8</format>
+              <anti_aliasing>4</anti_aliasing>
+            </image>
+            <camera_info_topic>camera/camera_info</camera_info_topic>
+            <trigger_topic></trigger_topic>
+            <triggered>false</triggered>
+            <clip>
+              <near>0.02</near>
+              <far>300</far>
+            </clip>
+            <save enabled='false'>
+              <path>__default__</path>
+            </save>
+            <visibility_mask>4294967295</visibility_mask>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.0070000000000000001</stddev>
+            </noise>
+            <distortion>
+              <k1>0</k1>
+              <k2>0</k2>
+              <k3>0</k3>
+              <p1>0</p1>
+              <p2>0</p2>
+              <center>0.5 0.5</center>
+            </distortion>
+            <lens>
+              <type>stereographic</type>
+              <scale_to_hfov>true</scale_to_hfov>
+              <cutoff_angle>1.5707963267948966</cutoff_angle>
+              <env_texture_size>256</env_texture_size>
+            </lens>
+            <optical_frame_id></optical_frame_id>
+          </camera>
+        </sensor>
+        <sensor name='lidar' type='gpu_lidar'>
+          <pose>0 0 0.10000000000000001 0 0 0</pose>
+          <topic>scan</topic>
+          <update_rate>10</update_rate>
+          <enable_metrics>false</enable_metrics>
+          <lidar>
+            <scan>
+              <horizontal>
+                <samples>360</samples>
+                <resolution>1</resolution>
+                <min_angle>-3.1415899999999999</min_angle>
+                <max_angle>3.1415899999999999</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>1</samples>
+                <min_angle>0</min_angle>
+                <max_angle>0</max_angle>
+                <resolution>1</resolution>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.20000000000000001</min>
+              <max>30</max>
+              <resolution>0.01</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.01</stddev>
+            </noise>
+            <visibility_mask>4294967295</visibility_mask>
+          </lidar>
+        </sensor>
+        <pose>0 0 0 0 0 0</pose>
+        <enable_wind>false</enable_wind>
+      </link>
+      <joint name='left_wheel_joint' type='revolute'>
+        <pose>0 2.7755575615628914e-17 5.5511151231257827e-17 0 0 0</pose>
+        <parent>base_link</parent>
+        <child>left_wheel</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-inf</lower>
+            <upper>inf</upper>
+            <effort>inf</effort>
+            <velocity>inf</velocity>
+            <stiffness>100000000</stiffness>
+            <dissipation>1</dissipation>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+            <damping>0</damping>
+            <friction>0</friction>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='left_wheel'>
+        <pose>-0.19999999999999996 0.17499999999999993 -0.049999999999999989 -1.570800162663238 0.29226354564258911 -1.1051923791936256e-06</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.01</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.01</iyy>
+            <iyz>0</iyz>
+            <izz>0.01</izz>
+          </inertia>
+        </inertial>
+        <collision name='left_wheel_collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.050000000000000003</length>
+              <radius>0.10000000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+        </collision>
+        <visual name='left_wheel_visual'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.050000000000000003</length>
+              <radius>0.10000000000000001</radius>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Black</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+            <diffuse>0 0 0 1</diffuse>
+            <ambient>0 0 0 1</ambient>
+          </material>
+        </visual>
+        <enable_wind>false</enable_wind>
+      </link>
+      <joint name='right_wheel_joint' type='revolute'>
+        <pose>0 3.4694469519536142e-17 -5.5511151231257827e-17 0 0 0</pose>
+        <parent>base_link</parent>
+        <child>right_wheel</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-inf</lower>
+            <upper>inf</upper>
+            <effort>inf</effort>
+            <velocity>inf</velocity>
+            <stiffness>100000000</stiffness>
+            <dissipation>1</dissipation>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+            <damping>0</damping>
+            <friction>0</friction>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='right_wheel'>
+        <pose>-0.1999999999999999 -0.17499999999999993 -0.050000000000000058 1.5708000064250129 0.05910348772676445 -3.1415924362374148</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.01</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.01</iyy>
+            <iyz>0</iyz>
+            <izz>0.01</izz>
+          </inertia>
+        </inertial>
+        <collision name='right_wheel_collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.050000000000000003</length>
+              <radius>0.10000000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+          </surface>
+        </collision>
+        <visual name='right_wheel_visual'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.050000000000000003</length>
+              <radius>0.10000000000000001</radius>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Black</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+            <diffuse>0 0 0 1</diffuse>
+            <ambient>0 0 0 1</ambient>
+          </material>
+        </visual>
+        <enable_wind>false</enable_wind>
+      </link>
+      <plugin name='gz::sim::systems::DiffDrive' filename='gz-sim-diff-drive-system'>
+        <left_joint>left_wheel_joint</left_joint>
+        <right_joint>right_wheel_joint</right_joint>
+        <wheel_separation>0.287</wheel_separation>
+        <wheel_radius>0.033</wheel_radius>
+        <max_linear_acceleration>0.033</max_linear_acceleration>
+        <topic>cmd_vel</topic>
+        <odom_topic>odom</odom_topic>
+        <frame_id>odom</frame_id>
+        <child_frame_id>base_footprint</child_frame_id>
+        <odom_publisher_frequency>30</odom_publisher_frequency>
+        <tf_topic>/tf</tf_topic>
+      </plugin>
+      <plugin name='gz::sim::systems::JointStatePublisher' filename='gz-sim-joint-state-publisher-system'>
+        <update_rate>50</update_rate>
+        <joint_name>left_wheel_joint</joint_name>
+        <joint_name>right_wheel_joint</joint_name>
+        <topic>joint_states</topic>
+        <update_rate>30</update_rate>
+      </plugin>
+      <frame name='camera_joint' attached_to='base_link'>
+        <pose>0.27000000000000002 0 0.01 0 0 0</pose>
+      </frame>
+      <frame name='camera' attached_to='camera_joint'>
+        <pose>0 0 0 0 0 0</pose>
+      </frame>
+      <frame name='caster_wheel_joint' attached_to='base_link'>
+        <pose>0.20000000000000001 0 -0.10000000000000001 0 0 0</pose>
+      </frame>
+      <frame name='caster_wheel' attached_to='caster_wheel_joint'>
+        <pose>0 0 0 0 0 0</pose>
+      </frame>
+      <frame name='lidar_joint' attached_to='base_link'>
+        <pose>0 0 0.10000000000000001 0 0 0</pose>
+      </frame>
+      <frame name='lidar' attached_to='lidar_joint'>
+        <pose>0 0 0 0 0 0</pose>
+      </frame>
+      <pose>-0.32676574985959811 -0.71916587467004356 0.14999999901570371 9.2468147500102913e-10 4.4639935923893701e-07 -0.095772806217853931</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='ionic_interior'>
+      <static>true</static>
+      <link name='base_link'>
+        <visual name='ionic_visual'>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <mesh>
+              <uri>file:///home/ellakiya/.gz/fuel/fuel.gazebosim.org/openrobotics/models/ionic interior/1/meshes/Ionic.glb</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <collision name='collider_cylinder.001'>
+          <pose>11.63203 3.9222899999999998 0.34517999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.69081999999999999</length>
+              <radius>0.31559999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.002'>
+          <pose>13.419409999999999 4.0328900000000001 0.26440999999999998 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.52910999999999997</length>
+              <radius>0.21027000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.003'>
+          <pose>13.85553 3.9253499999999999 0.32147999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.64295999999999998</length>
+              <radius>0.22620999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.004'>
+          <pose>9.3520199999999996 0.74051999999999996 0.25659999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.50800000000000001</length>
+              <radius>0.17946000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.005'>
+          <pose>8.8572500000000005 0.72738999999999998 0.25659999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.50800000000000001</length>
+              <radius>0.17979999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.006'>
+          <pose>8.3547499999999992 0.71067000000000002 0.25659999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.50800000000000001</length>
+              <radius>0.1794</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.007'>
+          <pose>7.8759399999999999 0.75414000000000003 0.25659999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.50800000000000001</length>
+              <radius>0.18068000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.008'>
+          <pose>9.3644999999999996 -0.29615999999999998 0.25659999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.50800000000000001</length>
+              <radius>0.17976</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.009'>
+          <pose>8.8520900000000005 -0.28821999999999998 0.25659999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.50800000000000001</length>
+              <radius>0.18185000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.010'>
+          <pose>8.3552400000000002 -0.30836000000000002 0.25659999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.50800000000000001</length>
+              <radius>0.1797</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.011'>
+          <pose>7.8633800000000003 -0.28716999999999998 0.25659999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.50800000000000001</length>
+              <radius>0.17954000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.012'>
+          <pose>7.3826599999999996 -0.30014000000000002 0.25659999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.50800000000000001</length>
+              <radius>0.17982999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.001'>
+          <pose>8.2082300000000004 0.21634 0.39826 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.9623699999999999 0.17780000000000001 0.79652000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.002'>
+          <pose>8.2330000000000005 0.21401999999999999 0.81279999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.9279600000000001 0.66898000000000002 0.1016</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.013'>
+          <pose>9.9674499999999995 -1.1001399999999999 0.32147999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.64295999999999998</length>
+              <radius>0.22620999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.014'>
+          <pose>10.619820000000001 -1.0201100000000001 0.43201000000000001 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.86460000000000004</length>
+              <radius>0.39499000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.003'>
+          <pose>9.4871300000000005 -1.38931 1.7422500000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.0829800000000001 0.063850000000000004 0.41724</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.004'>
+          <pose>0.88429000000000002 3.62351 1.6860599999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.6551800000000001 0.067479999999999998 0.41659000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.005'>
+          <pose>-4.2497699999999998 3.62399 1.7422500000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.0829800000000001 0.063850000000000004 0.41724</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.007'>
+          <pose>9.0574700000000004 3.62351 1.6860599999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.6551800000000001 0.067479999999999998 0.41659000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.008'>
+          <pose>-1.6192299999999999 3.62399 1.7422500000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.0829800000000001 0.063850000000000004 0.41724</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.009'>
+          <pose>3.4020299999999999 3.62399 1.7422500000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.0829800000000001 0.063850000000000004 0.41724</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.010'>
+          <pose>-2.6272700000000002 -3.5552600000000001 1.7422500000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.0829800000000001 0.063850000000000004 0.41724</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.001'>
+          <pose>8.8689400000000003 3.47688 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.002'>
+          <pose>9.7255800000000008 3.47688 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.003'>
+          <pose>6.7596600000000002 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.004'>
+          <pose>5.9492200000000004 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.005'>
+          <pose>5.1387900000000002 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.006'>
+          <pose>-1.9362299999999999 -3.40869 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.007'>
+          <pose>-2.7466699999999999 -3.40869 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.008'>
+          <pose>9.3677399999999995 -1.24274 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.009'>
+          <pose>10.17817 -1.24274 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.010'>
+          <pose>8.5572999999999997 -1.24274 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.011'>
+          <pose>4.3318700000000003 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.012'>
+          <pose>3.5214300000000001 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.013'>
+          <pose>2.7109999999999999 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.014'>
+          <pose>0.69655 3.47688 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.015'>
+          <pose>1.5531900000000001 3.47688 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.016'>
+          <pose>-0.68940000000000001 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.017'>
+          <pose>-2.31027 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.018'>
+          <pose>-1.4998400000000001 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.019'>
+          <pose>-3.3199399999999999 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.020'>
+          <pose>-4.9408099999999999 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere.021'>
+          <pose>-4.1303799999999997 3.47742 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_sphere'>
+          <pose>-3.5571000000000002 -3.40869 1.7482500000000001 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.10951</radius>
+            </sphere>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.015'>
+          <pose>-4.43757 -2.8979300000000001 1.2958700000000001 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.20336000000000001</length>
+              <radius>0.092899999999999996</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.011'>
+          <pose>-4.3382699999999996 -2.3081800000000001 0.72326000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.061850000000000002 1.6189100000000001 0.57255999999999996</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.012'>
+          <pose>-2.58507 -3.5552800000000002 0.75068000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.72268 0.061850000000000002 0.62792000000000003</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.013'>
+          <pose>-1.1706000000000001 -2.7233299999999998 0.72326000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.061850000000000002 1.62201 0.57255999999999996</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.014'>
+          <pose>-2.7839299999999998 3.6237200000000001 0.75068000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>5.3993200000000003 0.061850000000000002 0.62792000000000003</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.015'>
+          <pose>-0.020889999999999999 1.7660899999999999 2.5087999999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.51017999999999997 0.51017999999999997 0.071660000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.016'>
+          <pose>-1.1095699999999999 -1.2902499999999999 2.4517799999999998 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.51017999999999997 0.51017999999999997 0.071660000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.017'>
+          <pose>4.7393200000000002 0.17452999999999999 0.57150000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.8288 0.76200000000000001 1.143</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.018'>
+          <pose>4.7393200000000002 0.17452999999999999 1.1493500000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.8542000000000001 0.78739999999999999 0.038100000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.016'>
+          <pose>3.69346 0.17452999999999999 1.95201 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.49453999999999998</length>
+              <radius>0.16167999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.017'>
+          <pose>5.5395099999999999 0.17452999999999999 2.1410999999999998 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.42005999999999999</length>
+              <radius>0.16167999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.018'>
+          <pose>5.5395099999999999 0.17452999999999999 2.2699799999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.12163</length>
+              <radius>0.25313000000000002</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.019'>
+          <pose>5.5395099999999999 0.17452999999999999 2.36266 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.51017999999999997 0.51017999999999997 0.071660000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.020'>
+          <pose>4.7393200000000002 0.17452999999999999 2.5084200000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.6448399999999999 1.2192000000000001 0.20319999999999999</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.021'>
+          <pose>1.73736 2.7852800000000002 0.72326000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.061850000000000002 1.62201 0.57255999999999996</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.019'>
+          <pose>2.8725900000000002 3.02182 0.22259999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43180000000000002</length>
+              <radius>0.16325999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.022'>
+          <pose>3.6265900000000002 2.97682 0.22259999999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.29987000000000003 0.29987000000000003 0.43180000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.020'>
+          <pose>4.4395899999999999 3.0138199999999999 0.22259999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43180000000000002</length>
+              <radius>0.17780000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.021'>
+          <pose>5.3615899999999996 3.0208200000000001 0.22259999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43180000000000002</length>
+              <radius>0.17780000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.022'>
+          <pose>-0.51141000000000003 2.44082 0.2215 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43180000000000002</length>
+              <radius>0.17780000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.023'>
+          <pose>-2.1814100000000001 2.3988200000000002 0.2215 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43180000000000002</length>
+              <radius>0.16325999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.024'>
+          <pose>-3.15741 2.33982 0.22277 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43434</length>
+              <radius>0.15565999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.025'>
+          <pose>-2.1773699999999998 -1.5989199999999999 0.2215 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43180000000000002</length>
+              <radius>0.17780000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.026'>
+          <pose>-3.1032799999999998 -1.78173 0.22277 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43434</length>
+              <radius>0.15565999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.027'>
+          <pose>-2.9595899999999999 -2.7513200000000002 0.2215 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43180000000000002</length>
+              <radius>0.16325999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.023'>
+          <pose>-0.35741000000000001 -1.1111800000000001 0.2215 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.29987000000000003 0.29987000000000003 0.43180000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.028'>
+          <pose>0.66159000000000001 -1.0681799999999999 0.2215 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43180000000000002</length>
+              <radius>0.16325999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.029'>
+          <pose>1.48959 -1.0921799999999999 0.2215 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43180000000000002</length>
+              <radius>0.17780000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.030'>
+          <pose>2.6235900000000001 -1.05918 0.2215 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.43180000000000002</length>
+              <radius>0.16325999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.031'>
+          <pose>-1.1095699999999999 -1.2902499999999999 2.3590900000000001 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.12163</length>
+              <radius>0.25313000000000002</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.032'>
+          <pose>-1.1095699999999999 -1.2902499999999999 1.7599499999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>1.3606</length>
+              <radius>0.16167999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.033'>
+          <pose>1.4016500000000001 -1.30836 1.8444499999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>1.06535</length>
+              <radius>0.16167999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.034'>
+          <pose>1.4016500000000001 -1.30836 2.2959700000000001 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.12163</length>
+              <radius>0.25313000000000002</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.035'>
+          <pose>-0.020889999999999999 1.7660899999999999 2.4161100000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.12163</length>
+              <radius>0.25313000000000002</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.036'>
+          <pose>-0.020889999999999999 1.7660899999999999 2.20574 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.58306000000000002</length>
+              <radius>0.16167999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.037'>
+          <pose>-0.020889999999999999 1.7660899999999999 0.81294 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>1.62588</length>
+              <radius>0.16167999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.024'>
+          <pose>-0.020889999999999999 1.7660899999999999 1.74936 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.20319999999999999 0.20319999999999999 0.49497000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.038'>
+          <pose>-5.2420799999999996 -0.75653000000000004 0.43034 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.86068999999999996</length>
+              <radius>0.25734000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.025'>
+          <pose>-5.3880100000000004 0.92969999999999997 2.4883299999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.51017999999999997 0.51017999999999997 0.071660000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.039'>
+          <pose>-5.3880100000000004 0.92969999999999997 2.3956400000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.12163</length>
+              <radius>0.25313000000000002</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.040'>
+          <pose>-5.3880100000000004 0.92969999999999997 1.9441200000000001 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>1.06535</length>
+              <radius>0.16167999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.026'>
+          <pose>-3.5582199999999999 -2.27623 0.73114999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.61002999999999996 1.05016 0.038309999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.027'>
+          <pose>0.091800000000000007 -1.13934 0.73114999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.60960999999999999 0.52347999999999995 0.038309999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.028'>
+          <pose>-5.0272399999999999 2.73603 0.73114999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.52347999999999995 0.60960000000000003 0.038100000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.029'>
+          <pose>-3.6672400000000001 2.73603 0.73114999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.52347999999999995 0.60960000000000003 0.038100000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.030'>
+          <pose>-2.2102400000000002 2.73603 0.73114999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.52347999999999995 0.60960000000000003 0.038100000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.031'>
+          <pose>-3.1405699999999999 2.7356099999999999 0.73114999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.52347999999999995 0.60960999999999999 0.038309999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.032'>
+          <pose>-1.68357 2.7356099999999999 0.73114999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.52347999999999995 0.60960999999999999 0.038309999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.033'>
+          <pose>-0.51624999999999999 2.73604 0.73114999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.60960000000000003 0.52347999999999995 0.038100000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.034'>
+          <pose>-0.020889999999999999 1.7660899999999999 0.035830000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.51017999999999997 0.51017999999999997 0.071660000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.035'>
+          <pose>1.4016500000000001 -1.30836 2.3886500000000002 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.51017999999999997 0.51017999999999997 0.071660000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.041'>
+          <pose>3.69346 0.17452999999999999 2.45994 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>2.6243699999999999</length>
+              <radius>0.038100000000000002</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.042'>
+          <pose>5.5395099999999999 0.17452999999999999 2.45994 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>2.6243699999999999</length>
+              <radius>0.038100000000000002</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.036'>
+          <pose>7.3965199999999998 3.4679099999999998 2.81019 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.66449000000000003 0.98556999999999995 0.53180000000000005</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.037'>
+          <pose>13.864280000000001 -0.78656999999999999 2.8503400000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.55105999999999999 2.3415499999999998 0.24437</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.038'>
+          <pose>11.310980000000001 0.56383000000000005 0.75068000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.061850000000000002 0.75192000000000003 0.62792000000000003</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.039'>
+          <pose>11.310980000000001 -0.050029999999999998 0.72152000000000005 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.061850000000000002 0.46073999999999998 0.56908000000000003</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.040'>
+          <pose>11.310980000000001 -0.64476 0.72326000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.061850000000000002 0.67369000000000001 0.57255999999999996</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.041'>
+          <pose>11.310980000000001 -1.20166 0.71464000000000005 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.061850000000000002 0.41797000000000001 0.55530999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.042'>
+          <pose>12.270989999999999 -1.8750599999999999 0.71464000000000005 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.41797000000000001 0.061850000000000002 0.55530999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.043'>
+          <pose>11.702669999999999 -1.8750599999999999 0.75068000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.70445999999999998 0.061850000000000002 0.62792000000000003</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.044'>
+          <pose>12.72082 -1.8750599999999999 0.72152000000000005 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.46073999999999998 0.061850000000000002 0.56908000000000003</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.045'>
+          <pose>13.29298 -1.8750599999999999 0.72326000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.67369000000000001 0.061850000000000002 0.57255999999999996</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.046'>
+          <pose>13.849880000000001 -1.8750599999999999 0.71464000000000005 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.41797000000000001 0.061850000000000002 0.55530999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.047'>
+          <pose>14.041169999999999 0.31458999999999998 0.72152000000000005 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.061839999999999999 0.46073999999999998 0.56908000000000003</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.048'>
+          <pose>14.041169999999999 0.76222000000000001 0.71464000000000005 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.061839999999999999 0.41797000000000001 0.55530999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.049'>
+          <pose>11.51071 -0.47569 0.21590000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.50161999999999995 2.9176500000000001 0.43180000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.050'>
+          <pose>13.82663 -0.47569 0.21590000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.50451999999999997 2.9176500000000001 0.43180000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.051'>
+          <pose>12.66939 -1.6796199999999999 0.21590000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.8189899999999999 0.50978999999999997 0.43180000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.043'>
+          <pose>13.986520000000001 0.63551999999999997 2.15822 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>1.3606</length>
+              <radius>0.16167999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.044'>
+          <pose>13.986520000000001 0.63551999999999997 2.7573599999999998 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.12163</length>
+              <radius>0.25313000000000002</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.052'>
+          <pose>13.986520000000001 0.63551999999999997 2.8802099999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.51017999999999997 0.51017999999999997 0.13199</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.053'>
+          <pose>7.3926299999999996 3.58108 0.035830000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.51017999999999997 0.51017999999999997 0.071660000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.045'>
+          <pose>7.3926299999999996 3.58108 0.12852 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.12163</length>
+              <radius>0.25313000000000002</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.046'>
+          <pose>7.3926299999999996 3.58108 0.81294 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>1.62588</length>
+              <radius>0.16167999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.047'>
+          <pose>7.3926299999999996 3.58108 2.20574 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.58306000000000002</length>
+              <radius>0.16167999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.048'>
+          <pose>7.3926299999999996 3.58108 2.4161100000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.12163</length>
+              <radius>0.25313000000000002</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.054'>
+          <pose>7.3926299999999996 3.58108 2.5087999999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.51017999999999997 0.51017999999999997 0.071660000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.055'>
+          <pose>7.3926299999999996 3.50488 1.74936 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.20319999999999999 0.050799999999999998 0.49497000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.056'>
+          <pose>8.2123200000000001 3.5835300000000001 0.71120000000000005 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.24654 0.29648999999999998 0.050799999999999998</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.057'>
+          <pose>4.5385900000000001 3.5028700000000002 0.71120000000000005 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>5.3262700000000001 0.60702999999999996 0.050799999999999998</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.058'>
+          <pose>2.0835599999999999 3.1968100000000002 0.71120000000000005 0 0 -0.44073000000000007</pose>
+          <geometry>
+            <box>
+              <size>0.24596000000000001 1.2086600000000001 0.050799999999999998</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.059'>
+          <pose>1.5421499999999999 -1.2961 2.6057999999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.90039999999999998 0.98556999999999995 0.36503000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.049'>
+          <pose>3.2772600000000001 -0.80803000000000003 0.30021999999999999 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.60077999999999998</length>
+              <radius>0.23874999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.060'>
+          <pose>2.0448 -1.13934 0.73114999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.60960999999999999 0.52347999999999995 0.038309999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.061'>
+          <pose>0.083820000000000006 2.7715299999999998 0.72326000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.061850000000000002 1.6189100000000001 0.57255999999999996</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.006'>
+          <pose>-2.0958100000000002 -2.65164 0.73114999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.60960999999999999 0.52347999999999995 0.038309999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.050'>
+          <pose>-2.0958100000000002 -2.6111200000000001 0.37735000000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.72030000000000005</length>
+              <radius>0.026239999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.051'>
+          <pose>-3.5579999999999998 -1.97238 0.37735000000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.72030000000000005</length>
+              <radius>0.026239999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.052'>
+          <pose>-3.55843 -2.5800900000000002 0.37735000000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.72030000000000005</length>
+              <radius>0.026239999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.053'>
+          <pose>-5.0677599999999998 2.73603 0.37735000000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.72030000000000005</length>
+              <radius>0.026239999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.054'>
+          <pose>-2.2507600000000001 2.73603 0.37735000000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.72030000000000005</length>
+              <radius>0.026239999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.055'>
+          <pose>-1.6430499999999999 2.7356099999999999 0.37735000000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.72030000000000005</length>
+              <radius>0.026239999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.056'>
+          <pose>-0.51624999999999999 2.6955200000000001 0.37735000000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.72030000000000005</length>
+              <radius>0.026239999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.057'>
+          <pose>-3.7077599999999999 2.73603 0.37735000000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.72030000000000005</length>
+              <radius>0.026239999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.058'>
+          <pose>-3.10005 2.7356099999999999 0.37735000000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.72030000000000005</length>
+              <radius>0.026239999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.059'>
+          <pose>-0.020889999999999999 1.7660899999999999 0.12852 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.12163</length>
+              <radius>0.25313000000000002</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.060'>
+          <pose>0.091800000000000007 -1.0988199999999999 0.37735000000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.72030000000000005</length>
+              <radius>0.026239999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder.061'>
+          <pose>2.0448 -1.0988199999999999 0.37735000000000002 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.72030000000000005</length>
+              <radius>0.026239999999999999</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.062'>
+          <pose>5.8298300000000003 3.62399 1.7422500000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.0829800000000001 0.063850000000000004 0.41724</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_cylinder'>
+          <pose>10.68567 -0.35753000000000001 0.26440999999999998 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.52910999999999997</length>
+              <radius>0.21027000000000001</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.063'>
+          <pose>-0.11531 -1.2575400000000001 1.7578400000000001 -1.5707926535897934 0.1592926535897933 3.1415926535897931</pose>
+          <geometry>
+            <box>
+              <size>1.3632899999999999 0.88263000000000003 0.35837000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.064'>
+          <pose>11.049670000000001 1.1363000000000001 1.49915 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1003 5.1650600000000004 2.9688500000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.065'>
+          <pose>2.9224199999999998 3.9411399999999999 1.6861999999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>16.817630000000001 0.59726000000000001 3.3723999999999998</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.066'>
+          <pose>14.267670000000001 1.1663600000000001 1.4732000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.39328000000000002 6.1468299999999996 2.9464000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.067'>
+          <pose>8.0005699999999997 -1.3042400000000001 1.4732000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.71443000000000001 0.23630999999999999 2.9464000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.068'>
+          <pose>8.5335599999999996 -2.2250700000000001 1.4732000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>5.5953600000000003 1.60534 2.9464000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.069'>
+          <pose>3.7949700000000002 -2.0349499999999998 1.3589 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.88422 1.9855799999999999 2.7178</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.070'>
+          <pose>0.85609000000000002 -2.5049000000000001 1.8288 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>3.9935499999999999 2.1650100000000001 3.6576</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.071'>
+          <pose>-4.4602599999999999 2.10846 2.6352500000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.05227 3.0982699999999999 0.21590000000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.072'>
+          <pose>-1.4724699999999999 -2.0694499999999998 2.6162000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.56047 3.03592 0.254</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.073'>
+          <pose>-2.6957200000000001 -2.7043400000000002 2.6162000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>4.0069600000000003 1.76614 0.254</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.074'>
+          <pose>1.88134 2.5920399999999999 1.3589 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.21590000000000001 2.1311200000000001 2.7178</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.075'>
+          <pose>1.88134 1.3790100000000001 2.41438 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.21590000000000001 4.5571799999999998 0.60684000000000005</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.076'>
+          <pose>8.1741799999999998 1.23576 2.78538 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.127 4.8436899999999996 0.32203999999999999</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.077'>
+          <pose>8.1741799999999998 -0.58304999999999996 2.6027499999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.127 1.20607 0.68730000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.078'>
+          <pose>3.6616200000000001 -0.25202000000000002 0.58074999999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.27532000000000001 1.5802799999999999 1.16151</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.079'>
+          <pose>5.2360600000000002 -3.0849700000000002 1.3589 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.99963999999999997 0.11447 2.7178</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.080'>
+          <pose>-4.4383400000000002 -2.5382899999999999 1.11185 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.12701000000000001 1.30958 2.2237100000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.081'>
+          <pose>-4.4383400000000002 -2.23482 0.83121 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.12701000000000001 1.91652 1.66242</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.082'>
+          <pose>1.51078 2.8091699999999999 0.21590000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.52522999999999997 1.69686 0.43180000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.083'>
+          <pose>0.30349999999999999 2.8091699999999999 0.21590000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.51068999999999998 1.69686 0.43180000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.084'>
+          <pose>-0.01533 2.8025000000000002 0.82974000000000003 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.12701000000000001 1.71021 1.65947</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.085'>
+          <pose>-0.01533 3.1106199999999999 1.1117699999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.12701000000000001 1.09396 2.2235499999999999</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.086'>
+          <pose>-1.3929499999999999 -2.7048800000000002 0.21590000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.50451999999999997 1.76505 0.43180000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.087'>
+          <pose>-2.5513300000000001 -3.3325100000000001 0.21590000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.8212700000000002 0.50980000000000003 0.43180000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.088'>
+          <pose>-4.1240300000000003 -2.3330799999999998 0.21590000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.50161999999999995 1.72 0.43180000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.089'>
+          <pose>-4.2410300000000003 -3.3902399999999999 1.2445999999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.55813999999999997 0.39433000000000001 2.4891999999999999</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.090'>
+          <pose>-3.3135500000000002 -3.69876 1.8288 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>4.3457100000000004 0.22270999999999999 3.6576</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.091'>
+          <pose>-5.5701099999999997 0.035099999999999999 1.8288 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.16742000000000001 7.2450099999999997 3.6576</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.092'>
+          <pose>-2.7826200000000001 3.3802400000000001 0.21590000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>5.4075699999999998 0.55471999999999999 0.43180000000000002</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.093'>
+          <pose>0.72738999999999998 2.25217 2.6225499999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.0920100000000001 2.8108499999999998 0.1905</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.094'>
+          <pose>3.2279200000000001 0.31492999999999999 3.0451000000000001 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>8.1714000000000002 6.6853400000000001 0.65459999999999996</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.095'>
+          <pose>3.1245599999999998 3.3847100000000001 2.6225499999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>2.27054 0.54578000000000004 0.1905</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.096'>
+          <pose>2.1608100000000001 2.87513 2.6225499999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.34303 1.56494 0.1905</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.097'>
+          <pose>10.804510000000001 1.1663600000000001 2.9649800000000002 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>6.9817799999999997 6.1468299999999996 0.037159999999999999</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box.098'>
+          <pose>11.14682 0.36492999999999998 0.61484000000000005 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.254 3.5746600000000002 1.2296899999999999</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='collider_box'>
+          <pose>11.07328 0.36216999999999999 2.3249499999999999 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.1016 3.56915 1.2428900000000001</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='ground'>
+          <pose>4.5270999999999999 0 0 0 0 0</pose>
+          <geometry>
+            <plane>
+              <size>23.899999999999999 10.300000000000001</size>
+              <normal>0 0 1</normal>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0.63607299327850342 -0.75065618753433228 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <light name='sun' type='directional'>
+      <pose>0 0 10 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1</intensity>
+      <direction>-0.5 0.10000000000000001 -0.90000000000000002</direction>
+      <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
+      <specular>0.200000003 0.200000003 0.200000003 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <linear>0.01</linear>
+        <constant>0.90000000000000002</constant>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+  </world>
+</sdf>
