@@ -98,6 +98,23 @@
             <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
         </inertial>
     </link>
+    <link name="caster_wheel2">
+        <visual>
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.25"/>
+            <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+        </inertial>
+    </link>
 
     <!-- Camera -->
     <link name="camera">
@@ -163,6 +180,13 @@
         <axis xyz="0 0 1"/>
     </joint>
 
+    <joint name="caster_wheel_joint2" type="fixed">
+        <parent link="base_link"/>
+        <child link="caster_wheel2"/>
+        <origin xyz="-0.2 0 -0.1"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
     <!-- Camera Joint -->
     <joint name="camera_joint" type="fixed">
         <parent link="base_link"/>
@@ -197,6 +221,12 @@
     </gazebo>
 
     <gazebo reference="caster_wheel">
+        <material>Gazebo/Black</material>
+        <mu1 value="0.05"/>
+        <mu2 value="0.05"/>
+    </gazebo>
+
+    <gazebo reference="caster_wheel2">
         <material>Gazebo/Black</material>
         <mu1 value="0.05"/>
         <mu2 value="0.05"/>

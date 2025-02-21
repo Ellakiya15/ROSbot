@@ -41,8 +41,8 @@ namespace custom_diff_drive
                    gz::sim::EventManager &) override
     {
       model = gz::sim::Model(_entity);
-      left_wheel_joint = model.JointByName(_ecm, "wheel_left_joint");
-      right_wheel_joint = model.JointByName(_ecm, "wheel_right_joint");
+      left_wheel_joint = model.JointByName(_ecm, "left_wheel_joint");
+      right_wheel_joint = model.JointByName(_ecm, "right_wheel_joint");
 
       node.Subscribe("/left_wheel_rpm", &DiffDrive::LeftWheelRPMCallback, this);
       node.Subscribe("/right_wheel_rpm", &DiffDrive::RightWheelRPMCallback, this);

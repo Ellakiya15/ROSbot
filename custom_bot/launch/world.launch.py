@@ -11,7 +11,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time", default=True)
 
     custom_bot_path = get_package_share_directory("custom_bot")
-    world_file = LaunchConfiguration("world_file", default=join(custom_bot_path, "worlds", "small_warehouse.sdf"))
+    world_file = LaunchConfiguration("world_file", default=join(custom_bot_path, "worlds", "warehouse_v1.sdf"))
     gz_sim_share = get_package_share_directory("ros_gz_sim")
 
     # Launch Ignition Gazebo
@@ -23,12 +23,12 @@ def generate_launch_description():
     )
 
     # Spawn the robot
-    spawn_robot_node = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(join(custom_bot_path, "launch", "gazebo.launch.py")),
-        launch_arguments={
-            # Pass any required arguments for spawning
-        }.items()
-    )
+    # spawn_robot_node = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(join(custom_bot_path, "launch", "gazebo.launch.py")),
+    #     launch_arguments={
+    #         # Pass any required arguments for spawning
+    #     }.items()
+    # )
 
     return LaunchDescription([
         # Set the resource path for worlds and models
@@ -45,5 +45,5 @@ def generate_launch_description():
         DeclareLaunchArgument("world_file", default_value=world_file),
 
         gz_sim,
-        spawn_robot_node
+        # spawn_robot_node
     ])

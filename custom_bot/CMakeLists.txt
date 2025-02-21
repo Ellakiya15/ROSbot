@@ -18,11 +18,11 @@ find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(ros_gz_bridge REQUIRED)
 find_package(ros_gz_sim REQUIRED)
-find_package(gz-sim7 REQUIRED)
+find_package(gz-sim8 REQUIRED)
 
 add_executable(cmd_vel_to_rpm src/diff_drive_controller.cpp)
 add_library(custom_diff_drive SHARED src/new_plugin.cpp)
-target_link_libraries(custom_diff_drive PRIVATE gz-sim7::gz-sim7)
+target_link_libraries(custom_diff_drive PRIVATE gz-sim8::gz-sim8)
 
 ament_target_dependencies(cmd_vel_to_rpm rclcpp geometry_msgs std_msgs)
 

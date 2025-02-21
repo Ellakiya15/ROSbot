@@ -5,7 +5,7 @@
 class CmdVelToRPM : public rclcpp::Node
 {
 public:
-    CmdVelToRPM() : Node("cmd_vel_to_rpm"), wheelbase_(0.287), wheel_radius_(0.033), max_rpm_(150.0)
+    CmdVelToRPM() : Node("cmd_vel_to_rpm"), wheelbase_(0.287), wheel_radius_(0.033), max_rpm_(140.0)
     {
         // Declare dynamically adjustable parameters
         this->declare_parameter("wheelbase", wheelbase_);

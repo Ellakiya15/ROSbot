@@ -12,12 +12,12 @@ class WaypointNavigation(Node):
 
         # Declare ROS 2 parameters
         self.declare_parameter('waypoint_1_x', 1.0)
-        self.declare_parameter('waypoint_1_y', 1.0)
-        self.declare_parameter('waypoint_2_x', 2.0)
+        self.declare_parameter('waypoint_1_y', 2.0)
+        self.declare_parameter('waypoint_2_x', 3.0)
         self.declare_parameter('waypoint_2_y', 2.0)
-        self.declare_parameter('kp', 1.5)
+        self.declare_parameter('kp', 1.0)
         self.declare_parameter('ki', 0.01)
-        self.declare_parameter('kd', 0.1)
+        self.declare_parameter('kd', 0.0)
 
         # Get parameters
         self.waypoints = [
@@ -46,19 +46,28 @@ class WaypointNavigation(Node):
         self.timer = self.create_timer(0.1, self.control_loop)
 
     def odom_callback(self, msg):
-        # Extract robot position
         self.robot_x = msg.pose.pose.position.x
         self.robot_y = msg.pose.pose.position.y
 
-        # Extract orientation (quaternion to Euler)
         q = msg.pose.pose.orientation
         siny_cosp = 2 * (q.w * q.z + q.x * q.y)
         cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z)
         self.robot_yaw = math.atan2(siny_cosp, cosy_cosp)
 
+        # Debugging print
+        # print(f"Received Odometry Data: x = {self.robot_x}, y = {self.robot_y}")  # Debugging
+        # self.get_logger().info(f"Robot Position: x = {self.robot_x:.2f}, y = {self.robot_y:.2f}")
+
     def control_loop(self):
+        if not hasattr(self, 'stop_executed'):
+            self.stop_executed = False  # Ensure flag exists
+
         if self.current_waypoint_index >= len(self.waypoints):
-            self.stop_robot()
+            if not self.stop_executed:  # Check if stop action has already been executed
+                self.get_logger().info("Waypoints reached. Stopping robot.")
+                self.stop_robot()
+                self.get_logger().info("Successfully reached all waypoints.")
+                self.stop_executed = True  # Set flag to prevent multiple stops
             return
 
         target_x, target_y = self.waypoints[self.current_waypoint_index]
@@ -67,9 +76,14 @@ class WaypointNavigation(Node):
         distance = math.sqrt((target_x - self.robot_x) ** 2 + (target_y - self.robot_y) ** 2)
 
         if distance < 0.1:  # If close to waypoint, switch to next
+            self.get_logger().info(f"Waypoint {self.current_waypoint_index + 1} reached: ({target_x}, {target_y})")
             self.current_waypoint_index += 1
             if self.current_waypoint_index >= len(self.waypoints):
-                self.stop_robot()
+                if not self.stop_executed:
+                    self.get_logger().info("Waypoints reached. Stopping robot.")
+                    self.stop_robot()
+                    self.get_logger().info("Successfully reached all waypoints.")
+                    self.stop_executed = True  # Ensure it runs only once
             return
 
         # Compute angle to waypoint
@@ -94,13 +108,98 @@ class WaypointNavigation(Node):
         twist.angular.z = angular_vel
         self.cmd_vel_pub.publish(twist)
 
+
+    # def control_loop(self):
+    #     if self.current_waypoint_index >= len(self.waypoints):
+    #         self.stop_robot()
+    #         return
+
+    #     target_x, target_y = self.waypoints[self.current_waypoint_index]
+
+    #     # Compute Euclidean distance to target
+    #     distance = math.sqrt((target_x - self.robot_x) ** 2 + (target_y - self.robot_y) ** 2)
+
+    #     if distance < 0.1:  # If close to waypoint, switch to next
+    #         self.get_logger().info(f"Waypoint {self.current_waypoint_index + 1} reached: ({target_x}, {target_y})")
+    #         self.current_waypoint_index += 1
+    #         if self.current_waypoint_index >= len(self.waypoints):
+    #             self.stop_robot()
+    #         return
+
+    #     # Compute angle to waypoint
+    #     target_angle = math.atan2(target_y - self.robot_y, target_x - self.robot_x)
+    #     angle_error = target_angle - self.robot_yaw
+
+    #     # Normalize angle error
+    #     angle_error = math.atan2(math.sin(angle_error), math.cos(angle_error))
+
+    #     # PID Controller for angular velocity
+    #     self.integral += angle_error * 0.1
+    #     derivative = (angle_error - self.prev_error) / 0.1
+    #     angular_vel = self.kp * angle_error + self.ki * self.integral + self.kd * derivative
+    #     self.prev_error = angle_error
+
+    #     # Proportional speed based on distance
+    #     linear_vel = min(0.5, distance * 0.5)
+
+    #     # Publish velocity
+    #     twist = Twist()
+    #     twist.linear.x = linear_vel
+    #     twist.angular.z = angular_vel
+    #     self.cmd_vel_pub.publish(twist)
+
+    # def control_loop(self):
+    #     if self.current_waypoint_index >= len(self.waypoints):
+    #         self.stop_robot()
+
+    #         # Stop logging after reaching all waypoints
+    #         if not hasattr(self, 'logging_stopped'):
+    #             self.get_logger().info("All waypoints reached. Stopping position logging.")
+    #             self.logging_stopped = True  # Set flag to prevent further prints
+    #         return
+
+    #     target_x, target_y = self.waypoints[self.current_waypoint_index]
+
+    #     # Compute Euclidean distance to target
+    #     distance = math.sqrt((target_x - self.robot_x) ** 2 + (target_y - self.robot_y) ** 2)
+
+    #     if distance < 0.1:  # If close to waypoint, switch to next
+    #         self.get_logger().info(f"Waypoint {self.current_waypoint_index + 1} reached: ({target_x}, {target_y})")
+    #         self.current_waypoint_index += 1
+    #         return
+
+    #     # Compute angle to waypoint
+    #     target_angle = math.atan2(target_y - self.robot_y, target_x - self.robot_x)
+    #     angle_error = target_angle - self.robot_yaw
+
+    #     # Normalize angle error
+    #     angle_error = math.atan2(math.sin(angle_error), math.cos(angle_error))
+
+    #     # PID Controller for angular velocity
+    #     self.integral += angle_error * 0.1
+    #     derivative = (angle_error - self.prev_error) / 0.1
+    #     angular_vel = self.kp * angle_error + self.ki * self.integral + self.kd * derivative
+    #     self.prev_error = angle_error
+
+    #     # Proportional speed based on distance
+    #     linear_vel = min(0.5, distance * 0.5)
+
+    #     # Publish velocity
+    #     twist = Twist()
+    #     twist.linear.x = linear_vel
+    #     twist.angular.z = angular_vel
+    #     self.cmd_vel_pub.publish(twist)
+
+
+
     def stop_robot(self):
         """Stop the robot when waypoints are completed"""
         twist = Twist()
         twist.linear.x = 0.0
         twist.angular.z = 0.0
         self.cmd_vel_pub.publish(twist)
-        self.get_logger().info("Waypoints reached. Stopping robot.")
+        # self.get_logger().info
+        # print("Waypoints reached. Stopping robot")
 
 def main(args=None):
     rclpy.init(args=args)
