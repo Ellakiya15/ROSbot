@@ -67,7 +67,7 @@
       <self_collide>false</self_collide>
     </model>
     <include>
-      <uri>file:///home/ellakiya/.gz/fuel/fuel.gazebosim.org/openrobotics/models/warehouse/5</uri>
+      <uri>model://warehouse/5</uri>
       <name>warehouse</name>
       <pose>-2.9916970351644139 -7.1242646161214545 0 0 0 0</pose>
     </include>
